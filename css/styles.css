@@ -511,10 +511,6 @@ select:focus {
         margin-left: 2rem;
     }
 
-    #restaurants-list .restaurant-img {
-        margin: -15% 0 -35%;
-    }
-
     #restaurants-list li h1 {
         font-size: 2.5rem;
         margin: 0;
