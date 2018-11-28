@@ -1,7 +1,7 @@
 let staticCacheName = "restaurants-static-v1";
 let urlsToCache = [
   "./",
-  "./sw_registration.js",
+  "js/sw_registration.js",
   "index.html",  
   "restaurant.html",
   "css/styles.css",
@@ -33,10 +33,10 @@ self.addEventListener("install", (event) => {
 /**
  * Activate Service worker and delete old cache (if any) add new cache
  */
-self.addEventListener('activate', (event) => {
+self.addEventListener("activate", (event) => {
   event.waitUntil(caches.keys().then((cacheNames) => {
     return Promise.all(cacheNames.filter((cacheName) => {
-      return cacheName.startsWith('mws-') && cacheName != staticCacheName;
+      return cacheName.startsWith("restaurants-static-v1-") && cacheName != staticCacheName;
     }).map((cacheName) => {
       return caches.delete(cacheName);
     }));
@@ -46,7 +46,7 @@ self.addEventListener('activate', (event) => {
 /***
  * Intercept all request and match against the cache to respond respectively
  */
-self.addEventListener('fetch', (event) => {
+self.addEventListener("fetch", (event) => {
   event.respondWith(caches.match(event.request).then((response) => {
     /**
      * To matching response, we return the cached value, otherwise we return
@@ -66,7 +66,7 @@ self.addEventListener('fetch', (event) => {
          * of the fetch request and then adding it to the cache, like below.
          *The code below will cache the visited restaurant page
          */
-        if(event.request.url.indexOf('restaurant.html') != -1 || event.request.url.indexOf('https://maps.googleapi.com/js') != -1){
+        if(event.request.url.indexOf("restaurant.html") != -1 || event.request.url.indexOf("https://maps.googleapi.com/js") != -1){
           cache.put(event.request, response.clone());
         }
         return response;
@@ -83,9 +83,9 @@ self.addEventListener('fetch', (event) => {
  * listen for the "message" event, and call
  * skipWaiting if you get the appropriate message
  */
-self.addEventListener('message', (event) => {
+self.addEventListener("message", (event) => {
   if (event.data) {
-    console.log('Messgae received:' + event.data);
+    console.log("Messgae received:" + event.data);
     self.skipWaiting();
   }
 });
